@@ -1,0 +1,39 @@
+CUDA_VISIBLE_DEVICES="0,1,2,3" \
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True && \
+accelerate launch --config_file "configs/config.yaml" train.py \
+--seed 100 \
+--model_name_or_path "beomi/Llama-3-Open-Ko-8B" \
+--chat_template_format "none" \
+--add_special_tokens False \
+--append_concat_token False \
+--max_seq_len 512 \
+--num_train_epochs 1 \
+--logging_steps 50 \
+--log_level "info" \
+--logging_strategy "steps" \
+--eval_strategy "epoch" \
+--save_strategy "steps" \
+--save_steps 100 \
+--hub_strategy "every_save" \
+--fp16 True \
+--fp16_opt_level "O1" \
+--packing False \
+--learning_rate 2e-5 \
+--lr_scheduler_type "cosine" \
+--weight_decay 0.0 \
+--warmup_ratio 0.1 \
+--max_grad_norm 1.0 \
+--output_dir "results/beomi/Llama-3-Open-Ko-8B" \
+--per_device_train_batch_size 1 \
+--per_device_eval_batch_size 1 \
+--gradient_accumulation_steps 4 \
+--gradient_checkpointing True \
+--use_reentrant False \
+--dataset_text_field "content" \
+--use_nested_quant True \
+--use_peft_lora True \
+--lora_target_modules "all-linear" \
+--use_beam_search False
+
+# Add --resume_from_checkpoint "results/.../checkpoint-N" to the command above
+# only when resuming a local run.

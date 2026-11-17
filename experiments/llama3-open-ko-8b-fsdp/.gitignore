@@ -1,0 +1,8 @@
+.venv/
+.yoonk_venv/
+__pycache__/
+data/
+results/
+wandb/
+*.pyc
+.DS_Store
